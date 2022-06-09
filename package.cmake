@@ -13,7 +13,6 @@ set(CPACK_PACKAGE_FILE_NAME "${CMAKE_PROJECT_NAME}-${VERSION_FULL}")
 
 set(CPACK_PACKAGE_CONTACT "EOS Network Foundation")
 set(CPACK_PACKAGE_VENDOR "EOS Network Foundation")
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "daemon and CLI tools for Mandel blockchain protocol")
 set(CPACK_PACKAGE_HOMEPAGE_URL "https://github.com/eosnetworkfoundation/mandel")
 
 set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
@@ -21,6 +20,24 @@ set(CPACK_DEBIAN_PACKAGE_SECTION "utils")
 
 set(CPACK_DEBIAN_PACKAGE_CONFLICTS "eosio")
 set(CPACK_RPM_PACKAGE_CONFLICTS "eosio")
+
+get_cmake_property(CPACK_COMPONENTS_ALL COMPONENTS)
+list(REMOVE_ITEM CPACK_COMPONENTS_ALL "Unspecified")
+
+set(BASE_SUMMARY "daemon and CLI tools for Mandel blockchain protocol")
+set(DEV_SUMMARY "headers and libraries for native contract unit testing")
+
+set(CPACK_DEB_COMPONENT_INSTALL ON)
+set(CPACK_DEBIAN_BASE_PACKAGE_NAME "${CMAKE_PROJECT_NAME}")
+set(CPACK_DEBIAN_BASE_FILE_NAME "${CPACK_PACKAGE_FILE_NAME}.deb")
+set(CPACK_DEBIAN_BASE_DESCRIPTION "${BASE_SUMMARY}")
+set(CPACK_DEBIAN_DEV_DESCRIPTION "${DEV_SUMMARY}")
+
+set(CPACK_RPM_COMPONENT_INSTALL ON)
+set(CPACK_RPM_BASE_PACKAGE_NAME "${CMAKE_PROJECT_NAME}")
+set(CPACK_RPM_BASE_FILE_NAME "${CPACK_PACKAGE_FILE_NAME}.rpm")
+set(CPACK_RPM_BASE_PACKAGE_SUMMARY "${BASE_SUMMARY}")
+set(CPACK_RPM_DEV_PACKAGE_SUMMARY "${DEV_SUMMARY}")
 
 #turn some knobs to try and make package paths cooperate with GNUInstallDirs a little better
 set(CPACK_SET_DESTDIR ON)
